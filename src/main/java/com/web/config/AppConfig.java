@@ -9,7 +9,11 @@ import org.springframework.context.annotation.Configuration;
 
 import com.web.model.Capability;
 import com.web.model.Account;
-
+/**
+ * Basic config, mainly to mitigate the lack of data persistency,
+ * add default users to the account service and basic Capabilities for the authorization service usage
+ *
+ */
 @Configuration
 public class AppConfig {
 

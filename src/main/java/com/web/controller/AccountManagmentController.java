@@ -19,6 +19,11 @@ import com.web.service.Exceptions.ActionNotPermitedException;
 import com.web.service.Exceptions.AuthorizationSessionNotExistException;
 import com.web.service.Exceptions.CapabilityNotFoundException;
 import com.web.service.Exceptions.IllegalAccountValueException;
+/**
+ * AccountManagmentController, expose the user management capabilities, Add, remove and list user accounts
+ * Uses the spring source RESTful Web-Service annotations to initialize and invoke the different API calls
+ *
+ */
 
 @RestController
 public class AccountManagmentController {
@@ -33,6 +38,14 @@ public class AccountManagmentController {
 	@Autowired
 	private CapabilityService capabilityService;
 	
+	/**
+	 * Adding a new user account to the AccountService
+	 * @param emailAddress
+	 * @param password
+	 * @return true if the account has been created
+	 * @throws AccountAllreadyExistException In case the user Email Address is already taken  
+	 * @throws IllegalAccountValueException In case Email address or password are empty
+	 */
 	@PostMapping("/accountManagment/addNewUserAccount")
 	public boolean addNewUserAccount(
 			@RequestParam(value="emailAddress") String emailAddress, 
@@ -50,6 +63,14 @@ public class AccountManagmentController {
 		return newAccount != null;
 	}
 	
+	/**
+	 * Look-up user account data, this method can be invoked by a logedIn Administrator or by the searched user himself
+	 * @param emailAddress to be looked-up
+	 * @param sessionToken logedIn user how wish to make the look-up
+	 * @return User Account data object
+	 * @throws ActionNotPermitedException in case the logedIn user has no look-up privileges or is not the looked-up user
+	 * @throws AuthorizationSessionNotExistException in case the call is not made buy a logedIn user
+	 */
 	@PostMapping("/accountManagment/getUserAccount")
 	public Account getUserAccount(
 			@RequestParam(value="emailAddress")  String emailAddress, 
@@ -60,7 +81,7 @@ public class AccountManagmentController {
 		try {
 			listUsers = capabilityService.getCapabilityByName("ListUsers");
 		} catch (CapabilityNotFoundException e) {
-			logger.error("Cannot add user",e);
+			logger.error("Cannot look-up user",e);
 		}
 		
 		logger.debug(String.format("%s is getting $s user account", logedInAccount.getEmailAddress(), emailAddress));

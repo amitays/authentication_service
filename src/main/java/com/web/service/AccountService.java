@@ -15,6 +15,11 @@ import com.web.service.Exceptions.IllegalAccountValueException;
 import com.web.service.Exceptions.AccountAllreadyExistException;
 import com.web.service.Exceptions.AccountNotExistException;
 
+/**
+ * Basic user account management BL, 
+ * Holds and manage the user accounts list and facilitate the user credential check
+ *
+ */
 @Component
 public class AccountService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

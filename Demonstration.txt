@@ -1,0 +1,59 @@
+Adding new user account:
+curl -X POST \
+  http://localhost:8080//accountManagment/addNewUserAccount \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'postman-token: 06908794-3d18-339c-36e6-3ac30c8ed01b' \
+  -F emailAddress=onthfly@user.com \
+  -F password=somePassword
+
+Return:
+true
+
+LogIn to the new account:
+curl -X POST \
+  http://localhost:8080//logInService/logIn \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'postman-token: 55cc085e-9895-25dd-f30a-121853c726db' \
+  -F emailAddress=onthfly@user.com \
+  -F password=somePassword
+
+Return:
+d2a856c8-051d-4ad2-bdeb-d116f0656ed5
+
+Retriving a user:
+curl -X POST \
+  http://localhost:8080/accountManagment/getUserAccount \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'postman-token: 9a4b35b8-c094-4af9-1947-77d05df5b84f' \
+  -F sessionToken=d2a856c8-051d-4ad2-bdeb-d116f0656ed5 \
+  -F emailAddress=onthfly@user.com
+  
+ Return:
+ {
+    "emailAddress": "onthfly@user.com",
+    "password": "somePassword",
+    "addressVerified": false,
+    "name": "",
+    "address": "",
+    "capabilitiesList": [
+        {
+            "level": 1,
+            "name": "User"
+        }
+    ]
+}
+
+LogOut:
+curl -X POST \
+  http://localhost:8080//logInService/logOut \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'postman-token: ba7d0c6e-e023-f549-3b54-8c956174e06d' \
+  -F emailAddress=onthfly@user.com \
+  -F sessionToken=d2a856c8-051d-4ad2-bdeb-d116f0656ed5
+  
+ Return:
+ true

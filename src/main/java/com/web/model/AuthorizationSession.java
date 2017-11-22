@@ -2,7 +2,10 @@ package com.web.model;
 
 import java.util.Date;
 
-
+/**
+ * AuthorizationSession holds the LogIn status of each LogedIn user to a specific machine
+ *
+ */
 public class AuthorizationSession {
 	private final String accountId;
 	private final String machineId;

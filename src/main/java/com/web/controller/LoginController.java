@@ -15,6 +15,12 @@ import com.web.service.Exceptions.AuthorizationSessionAllreadyExistException;
 import com.web.service.Exceptions.AuthorizationSessionNotExistException;
 import com.web.service.Exceptions.InvalidUsernameOrPassword;
 
+/**
+ * LoginController, expose the authorization session management capabilities, LogIn and LogOut users, 
+ * Managing the session token distribution (self implemented OAuth capability)
+ * Uses the spring source RESTful Web-Service annotations to initialize and invoke the different API calls
+ *
+ */
 @RestController
 public class LoginController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -24,7 +30,16 @@ public class LoginController {
 	
 	@Autowired
 	private AuthorizationSessionService sessionService;
-		
+	
+	/**
+	 * LogIn the user to the current machine
+	 * @param emailAddress
+	 * @param password
+	 * @param machineId naive machine identifier for this exercise purpose, we use the User-Agent as the identifier 
+	 * @return a session token to be used in future API calls as a proof for the LogedIn status 
+	 * @throws InvalidUsernameOrPassword user name and password do not match
+	 * @throws AuthorizationSessionAllreadyExistException the user is already LogedIn on this machine
+	 */
 	@PostMapping("/logInService/logIn")
 	public String logIn(@RequestParam(value="emailAddress") String emailAddress, 
 			@RequestParam(value="password")String password, @RequestHeader("User-Agent") String machineId) 
@@ -41,6 +56,14 @@ public class LoginController {
 		throw new InvalidUsernameOrPassword();
 	}
 	
+	/**
+	 * LogOut the user, will work only if the user is LogedIn to this machine
+	 * @param sessionToken given by the LogIn call
+	 * @param emailAddress
+	 * @param machineId naive machine identifier for this exercise purpose, we use the User-Agent as the identifier
+	 * @return true if the LogOut was successful
+	 * @throws AuthorizationSessionNotExistException the current user is not LogedIn to this machine
+	 */
 	@PostMapping("/logInService/logOut")
 	public boolean logOut(@RequestParam(value="sessionToken") String sessionToken, 
 			@RequestParam(value="emailAddress") String emailAddress,

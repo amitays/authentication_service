@@ -12,6 +12,12 @@ import com.web.model.AuthorizationSession;
 import com.web.service.Exceptions.AuthorizationSessionAllreadyExistException;
 import com.web.service.Exceptions.AuthorizationSessionNotExistException;
 
+/**
+ * authorization session management BL, 
+ * Holds and manage the LogedIn users session for all users and machines
+ *
+ */
+
 @Component
 public class AuthorizationSessionService {
 	private static List<AuthorizationSession> sessions = new ArrayList<AuthorizationSession>();

@@ -1,5 +1,9 @@
 package com.web.model;
 
+/**
+ * basic classification data node, enabling data access control
+ *
+ */
 public class Capability {
 	private final int level;
 	private final String name;

@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 import com.web.model.Capability;
 import com.web.service.Exceptions.CapabilityNotFoundException;
 
+/**
+ * basic classification management BL, 
+ * uses a naive classification model that permit resources access to users that their capability level 
+ * is higher that the resource capability level value
+ *
+ */
 @Component
 public class CapabilityService {
 	private static List<Capability> capabilityList;

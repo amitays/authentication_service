@@ -5,6 +5,11 @@ import java.util.List;
 
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * User Account model, on top of the basic user data elements, 
+ * each user has its capabilitiesList that will enable API call of restricted actions (like user look up) 
+ *
+ */
 public class Account {
 	private final String emailAddress;
 	private String password;
