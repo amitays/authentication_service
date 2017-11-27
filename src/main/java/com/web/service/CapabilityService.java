@@ -23,6 +23,12 @@ public class CapabilityService {
 		CapabilityService.capabilityList = capabilityList;
 	}
 		
+	/**
+	 * get the capability according to its capability name
+	 * @param name
+	 * @return the found capability object
+	 * @throws CapabilityNotFoundException cannot fined the capability with the given name
+	 */
 	public Capability getCapabilityByName(final String name) throws CapabilityNotFoundException{
 		for (Capability capability : capabilityList) {
 			if (capability.getName().equals(name)) {
@@ -32,6 +38,13 @@ public class CapabilityService {
 		throw new CapabilityNotFoundException(name);
 	}
 	
+	/**
+	 * Check if the action is permitted using a naive classification model.
+	 * User capability level value should be higher than the resource capability level
+	 * @param minimalCapabilities resource minimal capability level
+	 * @param existingCapabilities user's capability level
+	 * @return true if the action is permitted
+	 */
 	public boolean isActionPermited(List<Capability> minimalCapabilities, List<Capability> existingCapabilities ){
 		if( minimalCapabilities == null || existingCapabilities == null) throw new IllegalArgumentException();
 		

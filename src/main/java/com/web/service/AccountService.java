@@ -44,6 +44,15 @@ public class AccountService {
 		return getAccount(emailAddress) != null;
 	}
 	
+	/**
+	 * Add a new user account after validating input parameters and the uniqueness of the Email address 
+	 * @param emailAddress
+	 * @param password plain text password
+	 * @param capabilities user role/access level according to the CapabilityService model
+	 * @return true if the user account was created successfully
+	 * @throws IllegalAccountValueException missing or empty input parameters
+	 * @throws AccountAllreadyExistException an account with the same Email address already exist
+	 */
 	public final Account addNewAccount(final String emailAddress, final String password, List<Capability> capabilities) throws IllegalAccountValueException, AccountAllreadyExistException{
 		if(StringUtils.isEmpty(emailAddress) || StringUtils.isEmpty(password) || CollectionUtils.isEmpty(capabilities))
 			throw new IllegalAccountValueException(emailAddress, password, capabilities);
@@ -57,11 +66,19 @@ public class AccountService {
 		return null;
 	}
 	
+	/**
+	 * Compare the given password to the stored user account one  
+	 * @param emailAddress
+	 * @param password plain text password
+	 * @return true if succeed
+	 * @throws AccountNotExistException can not find the user account with the given Email address 
+	 */
 	public boolean authenticateAccount(final String emailAddress, final String password) throws AccountNotExistException {
 		final Account account = getAccount(emailAddress);
 		if(account == null) throw new AccountNotExistException(emailAddress);
 		logger.debug(String.format("authenticateAccount: %s with password: %s", emailAddress, password));
 		
+		//since we do not hash the password string, we use simple string comparison
 		return account.getPassword().equals(password);
 	}
 	
